@@ -23,7 +23,7 @@ def sanitize_years_input(years_input):
 def get_value_by_row_year():
     row = input("\U0001F4C3 \033[1;36mEnter the row title: \033[0m").strip()
     year = input("\U0001F4C6 \033[1;36mEnter the year: \033[0m").strip()
-    result = findByRowYear(row, year)
+    result = find_by_row_year(row, year, get_company())
     if result is not None:
         print(f"\U0001F4CA \033[1;32mResult for '{row}' in {year}: {result}\033[0m")
     else:
@@ -36,7 +36,7 @@ def get_values_by_row_years():
     if not years:
         print("\U0001F6AB \033[1;31mInvalid years input.\033[0m")
         return
-    result = findByRowYears(row, years)
+    result = find_by_row_years(row, years, get_company())
     print(f"\U0001F4CA \033[1;32mResults for '{row}' over years: {result}\033[0m")
 
 def plot_values_by_row_years():
@@ -46,39 +46,45 @@ def plot_values_by_row_years():
     if not years:
         print("\U0001F6AB \033[1;31mInvalid years input.\033[0m")
         return
-    plotRowYears(row, years)
+    plot_row_years(row, years, get_company())
 
-def calculate_current_ratio():
+def pretty_print(data):
+    for year, value in data.items():
+        formatted_value = f"{value:.4f}"
+        print(f"{year}: {formatted_value}")
+
+def calculate_current_ratio_menu():
     years_input = input("\U0001F4C6 \033[1;36mEnter the years (comma-separated): \033[0m")
     years = sanitize_years_input(years_input)
     if not years:
         print("\U0001F6AB \033[1;31mInvalid years input.\033[0m")
         return
-    calculateCurrentRatio(years)
+    result = calculate_current_ratio(years, get_company())
+    pretty_print(result)
 
-def calculate_quick_ratio():
+def calculate_quick_ratio_menu():
     years_input = input("\U0001F4C6 \033[1;36mEnter the years (comma-separated): \033[0m")
     years = sanitize_years_input(years_input)
     if not years:
         print("\U0001F6AB \033[1;31mInvalid years input.\033[0m")
         return
-    calculateQuickRatio(years)
+    pretty_print(calculate_quick_ratio(years, get_company()))
 
-def calculate_cash_ratio():
+def calculate_cash_ratio_menu():
     years_input = input("\U0001F4C6 \033[1;36mEnter the years (comma-separated): \033[0m")
     years = sanitize_years_input(years_input)
     if not years:
         print("\U0001F6AB \033[1;31mInvalid years input.\033[0m")
         return
-    calculateCashRatio(years)
+    pretty_print(calculate_cash_ratio(years, get_company()))
 
-def calculate_total_debt_ratio():
+def calculate_total_debt_ratio_menu():
     years_input = input("\U0001F4C6 \033[1;36mEnter the years (comma-separated): \033[0m")
     years = sanitize_years_input(years_input)
     if not years:
         print("\U0001F6AB \033[1;31mInvalid years input.\033[0m")
         return
-    calculateTotalDebtRatio(years)
+    pretty_print(calculate_total_debt_ratio(years, get_company()))
 
 def main():
     while True:
@@ -97,13 +103,13 @@ def main():
                 case 3:
                     plot_values_by_row_years()
                 case 4:
-                    calculate_current_ratio()
+                    calculate_current_ratio_menu()
                 case 5:
-                    calculate_quick_ratio()
+                    calculate_quick_ratio_menu()
                 case 6:
-                    calculate_cash_ratio()
+                    calculate_cash_ratio_menu()
                 case 7:
-                    calculate_total_debt_ratio()
+                    calculate_total_debt_ratio_menu()
                 case _:
                     print("\U0001F6AB \033[1;31mInvalid choice. Please select a number between 0 and 7.\033[0m")
         except ValueError:
