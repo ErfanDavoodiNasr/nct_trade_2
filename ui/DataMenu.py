@@ -2,24 +2,11 @@ from service.Data import *
 from util.Help import *
 
 
-def get_value_by_row_year():
-    menu = print_tables()
-    number = int(input("\U0001F4C3 \033[1;36mChoose a number: \033[0m").strip())
-    row = menu[number-1]
-    year = input("\U0001F4C6 \033[1;36mEnter the year: \033[0m").strip()
-    result = find_by_row_year(row, year, get_company())
-    if result is not None:
-        display_result(f"Result for '{row}' in {year}", {year: result})
-    else:
-        print("\U0001F6AB \033[1;31mNo data found.\033[0m")
-
-
 def get_values_by_row_years():
     menu = print_tables()
-    number = int(input("\U0001F4C3 \033[1;36mChoose a number: \033[0m").strip())
-    row = menu[number-1]
-    years_input = input("\U0001F4C6 \033[1;36mEnter the years (comma-separated): \033[0m")
-    years = sanitize_years_input(years_input)
+    number = get_input_number()
+    row = menu[number - 1]
+    years = get_valid_years()
     if not years:
         print("\U0001F6AB \033[1;31mInvalid years input.\033[0m")
         return
@@ -108,10 +95,21 @@ def print_tables():
 
 
 def plot_values_by_row_years():
-    row = input("\U0001F4C3 \033[1;36mEnter the row title: \033[0m").strip()
-    years_input = input("\U0001F4C6 \033[1;36mEnter the years (comma-separated): \033[0m")
-    years = sanitize_years_input(years_input)
+    menu = print_tables()
+    number = get_input_number()
+    row = menu[number - 1]
+    years = get_valid_years()
     if not years:
         print("\U0001F6AB \033[1;31mInvalid years input.\033[0m")
         return
     plot_row_years(row, years, get_company())
+
+
+def get_input_number():
+    while True:
+        number = int(input("\U0001F4C3 \033[1;36mChoose an option: \033[0m").strip())
+        if number not in range(1, 62):
+            print("\033[1;31mInvalid input. Please choose valid option.\033[0m")
+            continue
+        else:
+            return number
