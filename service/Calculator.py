@@ -1,31 +1,4 @@
-import matplotlib.pyplot as plt
-from data.Data import *
-
-
-def plot_row_years(row, years, company):
-    data = find_by_row_years(row, years, company)
-
-    if not data or (hasattr(data, 'any') and not data.any()) or len(data) == 0:
-        print("Error: No data found for the given row.")
-        return
-
-    filtered_data = {year: value for year, value in data.items() if value is not None}
-
-    if not filtered_data:
-        print("Error: No valid data found for the given row and years.")
-        return
-
-    x = list(filtered_data.keys())
-    y = list(filtered_data.values())
-
-    plt.figure(figsize=(10, 6))
-    plt.plot(x, y, marker='o', linestyle='-', color='b', label=row)
-    plt.xlabel('Years')
-    plt.ylabel('Values')
-    plt.title(f'Data Plot for "{row}"')
-    plt.grid(True, linestyle='--', alpha=0.6)
-    plt.legend()
-    plt.show()
+from service.Data import *
 
 
 def calculate_current_ratio(years, company):
