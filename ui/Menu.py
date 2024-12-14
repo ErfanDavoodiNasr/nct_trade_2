@@ -1,4 +1,4 @@
-from Calculator import *
+from service.Calculator import *
 
 def display_menu():
     print("\n\U0001F680 \033[1;32mWelcome to the Financial Analysis Tool!\033[0m \U0001F680")
