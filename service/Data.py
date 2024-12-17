@@ -5,17 +5,12 @@ from matplotlib import pyplot as plt
 def find_by_row_year(row, year, company):
     try:
         df = pd.read_csv(company, encoding='utf-8')
-        # Ensure that the row name is treated as a literal string and not a regex
         financial_facilities_row = df[df['عنوان'].str.contains(row.strip(), na=False, regex=False)]
-
-        # Check if the row is found
         if financial_facilities_row.empty:
             return None
 
-        # Check if the year exists in the columns
         if year in df.columns:
             value = financial_facilities_row[year].values[0]
-            # Return the value if it's not NaN, otherwise return None
             return value if pd.notna(value) else None
         else:
             return None
@@ -42,6 +37,7 @@ def find_by_row_years(row, years, company):
     except Exception as e:
         print(f"Error: {e}")
         return None
+
 
 def plot_row_years(row, years, company):
     data = find_by_row_years(row, years, company)

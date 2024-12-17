@@ -1,5 +1,5 @@
 def get_valid_years():
-    valid_years = {"1397","1398","1399","1400","1401","1402"}
+    valid_years = {"1397", "1398", "1399", "1400", "1401", "1402"}
 
     while True:
         years_input = input("\U0001F4C6 \033[1;36mEnter the years (comma-separated): \033[0m")
@@ -16,6 +16,7 @@ def sanitize_years_input(years_input):
     if all(year.isdigit() for year in years):
         return years
     return None
+
 
 # display for print funcs result
 def display_result(title, data):
